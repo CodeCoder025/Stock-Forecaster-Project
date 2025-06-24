@@ -1,0 +1,84 @@
+import yfinance as yf
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import OneHotEncoder
+
+ticker = yf.Ticker("KO")
+dataframe = ticker.history(start="2000-01-01", end="2025-01-01", interval="1d")
+dataframe["%ChangeToday"] = (dataframe["Open"]-dataframe["Close"])/dataframe["Open"]
+dataframe["%ChangeTomorrow"] = 0
+for i in range(len(dataframe)):
+    try:
+        dataframe.iat[i, dataframe.columns.to_list().index("%ChangeTomorrow")] = (dataframe.iloc[i+1, 3] - dataframe.iloc[i, 3])/dataframe.iloc[i, 3]
+    except:
+        dataframe.iat[i, dataframe.columns.to_list().index("%ChangeTomorrow")] = None
+dataframe["Date"] = dataframe.index
+dataframe = dataframe.reset_index(drop=True)
+dataframe["DayOfMonth"] = dataframe["Date"].dt.day
+dataframe["DayOfWeek"] = dataframe["Date"].dt.dayofweek
+dataframe["MonthOfYear"] = dataframe["Date"].dt.month
+
+encoder = OneHotEncoder()
+toEncode = ["DayOfMonth","DayOfWeek", "MonthOfYear"]
+encoder.fit(dataframe[toEncode])
+encoded = pd.DataFrame(encoder.transform(dataframe[toEncode]).toarray())
+
+oneDEncodedCats = []
+for i in range(len(encoder.categories_)):
+    for j in range(len(encoder.categories_[i])):
+        oneDEncodedCats.append(encoder.categories_[i][j])
+
+encodedColNames = []
+count = 0
+for feature in toEncode:
+    for i in range(dataframe[feature].nunique()):
+        encodedColNames.append("%s_%s"%(feature, oneDEncodedCats[count]))
+        count+=1
+dataframe[encodedColNames] = encoded
+
+dataframe.drop(columns=["Stock Splits","Dividends"], inplace = True)
+
+#MA FEATURE ENGINEERING:
+def MA (metricColumn, days, movingFrom): #movingFrom is the index of row in dataframe to find moving average from
+    movingAvg = 0
+    if movingFrom < days:
+        movingAvg = None
+    else:
+        for i in range(days):
+            movingAvg += dataframe.iloc[movingFrom-i, metricColumn]
+        movingAvg = movingAvg/days
+    return movingAvg
+
+#OHLC FEATURE ENGINEERING:
+dataframe["Log_Return"] = 0
+dataframe["HiLo"] = 0
+dataframe["DojiDetected"] = 0 #Doji is if wicks are far longer than body (body only about 10% of wicks). Shows indecision --- high fluctuation but no real change
+dataframe["MaruBozuDetected"] = 0 #Marubozu is present if candle is fully-bodied (ie low is at open and high is at close or vice versa). This is an extremely strong signal. However in reality this would not happen so a bit of leeway (0.25%) is given (see code)
+dataframe["ReverseMaruBozu"] = 0 #This is the vice versa of marubozu
+
+
+for i in range(len(dataframe)):
+    dataframe.iat[i, 60] = (dataframe.iloc[i,1]-dataframe.iloc[i,2])/((dataframe.iloc[i,0]+dataframe.iloc[i,3])/2)
+    if (abs(dataframe.iloc[i, 0]-dataframe.iloc[i, 3])) < 0.1*(dataframe.iloc[i, 1] - dataframe.iloc[i,2]):
+        dataframe.iat[i,61] = 1
+    if dataframe.iloc[i, 0] < 1.0025*dataframe.iloc[i, 2] and dataframe.iloc[i,1]*0.9975 < dataframe.iloc[i,3]:
+        dataframe.iat[i,62] = 1
+    if dataframe.iloc[i, 0] > 0.9975*dataframe.iloc[i, 1] and dataframe.iloc[i,2]*1.0025 > dataframe.iloc[i,3]:
+        dataframe.iat[i,63] = 1
+    if i != 0:
+        dataframe.iat[i,59] = np.log(dataframe.iloc[i,3]/dataframe.iloc[i-1,3])
+    else:
+        dataframe.iat[i,59] =None
+
+def colAbovexDMA(Featurecolumn, xList): #Featurecolumn is index of feature column. xList is list of x values for days of moving average
+    for x in xList:
+        dataframe["%sAbove%sDMA"%(Featurecolumn, x)] = 0
+        newColumnLen = dataframe.columns.to_list().index("%sAbove%sDMA"%(Featurecolumn, x))
+        for i in range(len(dataframe)):
+            try:
+                dataframe.iat[i, newColumnLen] = (dataframe.iloc[i, Featurecolumn]- MA(Featurecolumn, x, i))/MA(Featurecolumn, x, i)
+            except:
+                dataframe.iat[i, newColumnLen] = None
+colAbovexDMA(4, [3, 5, 10,30]) #This function is an attempt at iterative feature engineering, giving many features with high coding efficiency
+colAbovexDMA(0, [3,5,10,30])
