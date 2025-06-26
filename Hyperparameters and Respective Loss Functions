@@ -235,3 +235,9 @@ Wall time: 31.6 s
 
 
 Conclusion: Editing of hyperparameters make little improvement to cost functions. Problem is in feature engineering! Can try to integrate all algorithms to two ensembles and see how scores improve.
+
+{'linearModelPreds': 0.009930547718723943, 'regressionEnsemblePreds': 0.009873425618997116, 'GBRegPreds': 0.0099300923279385} {'logisticPreds': 0.6954458097682628, 'classificationEnsemblePreds': 0.6939776667515779, 'GBClassPreds': 1.0238544648409225}
+Consolidated RMSE:   0.009890966817952538
+Consolidated Cross-Entropy Loss:    0.7095382724316733
+CPU times: total: 2min 8s
+Wall time: 29.7 s
