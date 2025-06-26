@@ -120,7 +120,7 @@ predsDictCont["linearModelPreds"] = linearModelPreds
 predsDictCont["regressionEnsemblePreds"] = regressionEnsemblePreds
 predsDictCont["GBRegPreds"] = GBRegPreds
 
-from sklearn.metrics import log_loss
+from sklearn.metrics import log_loss, accuracy_score
 from sklearn.metrics import mean_squared_error as mse
 def calculateRMSE(AllPreds, actual):
     lossDict = {}
@@ -182,4 +182,4 @@ print(contLoss, entropyDict)
 print("Consolidated RMSE:  ", mse(testSet["%ChangeTomorrow"], predsDF["Consol%Chg"].to_list())**0.5)
 print("Consolidated Cross-Entropy Loss:   ", log_loss(testSet["UpOrDownTMR"], predsDF["ConsolProbaUp"]))
 
-print(accuracy_score(testSet["UporDownTMR"], blackWhitePreds))
+print(accuracy_score(testSet["UpOrDownTMR"], blackWhitePreds))
