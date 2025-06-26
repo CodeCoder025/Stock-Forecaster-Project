@@ -1,0 +1,71 @@
+Order of Presentation of Hyperparameters:
+____________________________________________
+
+  1. Linear Regression Model
+  2. Random Forest Ensemble for Continuous Data
+      - max_samples = 
+      - n_estimators = 
+      - max_depth = 
+      - min_samples_split = 
+      - max_features = 
+  3. Gradient Boosting Regressor
+      - n_estimators = 
+      - max_depth = (only applicable if booster = "gbtree")
+      - learning_rate = 
+      - booster = 
+      - min_child_weight = 
+  4. Logistic Regression Model
+      - c = 
+      - max_iter = 
+      - tol = 
+  5. Random Forest Ensemble for Categorical Data
+      - max_samples = 
+      - n_estimators = 
+      - max_depth = 
+      - min_samples_split = 
+      - max_features = 
+      - class_weight = 
+  6. Gradient Boosting Classifier
+      - n_estimators = 
+      - max_depth = (only applicable if booster = "gbtree")
+      - learning_rate = 
+      - booster = 
+      - min_child_weight = 
+
+
+Loss Function Dictionary Format Goes:
+{'linearModelPreds': RMSE, 'regressionEnsemblePreds': RMSE, 'GBRegPreds': RMSE} {'logisticPreds': Log Loss, 'classificationEnsemblePreds': Log Loss, 'GBClassPreds': Log Loss} ##Log Loss is aka Cross-Entropy Loss
+
+Default Hyperparameter Result:
+{'linearModelPreds': 0.009930602668591734, 'regressionEnsemblePreds': 0.010005917879084853, 'GBRegPreds': 0.009902424429435843} {'logisticPreds': 0.6958101174574136, 'classificationEnsemblePreds': 0.7034162675180372, 'GBClassPreds': 0.7985451591429574}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
