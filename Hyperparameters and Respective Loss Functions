@@ -10,9 +10,9 @@ ____________________________________________
       - max_features = 
   3. Gradient Boosting Regressor
       - n_estimators = 
+      - booster = 
       - max_depth = (only applicable if booster = "gbtree")
       - learning_rate = 
-      - booster = 
       - min_child_weight = 
   4. Logistic Regression Model
       - c = 
@@ -43,29 +43,195 @@ Default Hyperparameter Result:
 
 
 
+  1. Linear Regression Model
+  2. Random Forest Ensemble for Continuous Data
+      - max_samples = 0.7
+      - n_estimators = 200
+      - max_depth = 11
+      - min_samples_split = 4
+      - max_features = 0.8
+  3. Gradient Boosting Regressor
+      - n_estimators = 200
+      - booster = "gblinear"
+      - max_depth = None
+      - learning_rate = None
+      - min_child_weight = None
+  4. Logistic Regression Model
+      - c = 10
+      - max_iter = 2000
+      - tol = None
+  5. Random Forest Ensemble for Categorical Data
+      - max_samples = 0.7
+      - n_estimators = 200
+      - max_depth = 11
+      - min_samples_split = 4 
+      - max_features = 0.8
+      - class_weight = "balanced"
+  6. Gradient Boosting Classifier
+      - n_estimators = 200
+      - max_depth = 9
+      - learning_rate = 0.4
+      - booster = "gbtree"
+      - min_child_weight = 10
+
+{'linearModelPreds': 0.009930547718723943, 'regressionEnsemblePreds': 0.009865135554215095, 'GBRegPreds': 0.009912763192892296} {'logisticPreds': 0.695576720156843, 'classificationEnsemblePreds': 0.6953284426277478, 'GBClassPreds': 1.0027866636718659}
+CPU times: total: 48.8 s
+Wall time: 24.5 s
 
 
 
 
 
+ 1. Linear Regression Model
+  2. Random Forest Ensemble for Continuous Data
+      - max_samples = 0.7
+      - n_estimators = 200
+      - max_depth = 14
+      - min_samples_split = 4
+      - max_features = 0.8
+  3. Gradient Boosting Regressor
+      - n_estimators = 200
+      - booster = "gblinear"
+      - max_depth = None
+      - learning_rate = None
+      - min_child_weight = None
+  4. Logistic Regression Model
+      - c = 10
+      - max_iter = 2000
+      - tol = None
+  5. Random Forest Ensemble for Categorical Data
+      - max_samples = 0.7
+      - n_estimators = 200
+      - max_depth = 14
+      - min_samples_split = 4 
+      - max_features = 0.8
+      - class_weight = "balanced"
+  6. Gradient Boosting Classifier
+      - n_estimators = 300
+      - max_depth = 12
+      - learning_rate = 0.4
+      - booster = "gbtree"
+      - min_child_weight = 10
+
+{'linearModelPreds': 0.009930547718723943, 'regressionEnsemblePreds': 0.00991826560747643, 'GBRegPreds': 0.009912740012777034} {'logisticPreds': 0.695576720156843, 'classificationEnsemblePreds': 0.6962868555330468, 'GBClassPreds': 1.1025020061576052}
+CPU times: total: 1min
+Wall time: 24.9 s
+
+
+
+
+ 1. Linear Regression Model
+  2. Random Forest Ensemble for Continuous Data
+      - max_samples = 0.7
+      - n_estimators = 200
+      - max_depth = 7
+      - min_samples_split = 4
+      - max_features = 0.8
+  3. Gradient Boosting Regressor
+      - n_estimators = 200
+      - booster = "gblinear"
+      - max_depth = None
+      - learning_rate = None
+      - min_child_weight = None
+  4. Logistic Regression Model
+      - c = 1
+      - max_iter = 2000
+      - tol = None
+  5. Random Forest Ensemble for Categorical Data
+      - max_samples = 0.7
+      - n_estimators = 200
+      - max_depth = 7
+      - min_samples_split = 4 
+      - max_features = 0.8
+      - class_weight = "balanced"
+  6. Gradient Boosting Classifier
+      - n_estimators = 500
+      - max_depth = 5
+      - learning_rate = 0.4
+      - booster = "gbtree"
+      - min_child_weight = 10
+
+{'linearModelPreds': 0.009930547718723943, 'regressionEnsemblePreds': 0.009891454786083812, 'GBRegPreds': 0.009912834470735403} {'logisticPreds': 0.6956247411618716, 'classificationEnsemblePreds': 0.6953317423255884, 'GBClassPreds': 1.0424535822583265}
+CPU times: total: 44.7 s
+Wall time: 22.9 s
 
 
 
 
 
+ 1. Linear Regression Model
+  2. Random Forest Ensemble for Continuous Data
+      - max_samples = 0.55
+      - n_estimators = 200
+      - max_depth = 7
+      - min_samples_split = 4
+      - max_features = 0.6
+  3. Gradient Boosting Regressor
+      - n_estimators = 600
+      - booster = "gblinear"
+      - max_depth = None
+      - learning_rate = None
+      - min_child_weight = None
+  4. Logistic Regression Model
+      - c = 2
+      - max_iter = 2000
+      - tol = None
+  5. Random Forest Ensemble for Categorical Data
+      - max_samples = 0.55
+      - n_estimators = 1100
+      - max_depth = 7
+      - min_samples_split = 4 
+      - max_features = 0.6
+      - class_weight = "balanced"
+  6. Gradient Boosting Classifier
+      - n_estimators = 1500
+      - max_depth = 7
+      - learning_rate = 0.2
+      - booster = "gbtree"
+      - min_child_weight = 12
+
+{'linearModelPreds': 0.009930547718723943, 'regressionEnsemblePreds': 0.009878053953525236, 'GBRegPreds': 0.009926768144957757} {'logisticPreds': 0.6956247411618716, 'classificationEnsemblePreds': 0.69403570034317, 'GBClassPreds': 1.0983456504960962}
+CPU times: total: 1min 38s
+Wall time: 28.4 s
 
 
 
 
 
+ 1. Linear Regression Model
+  2. Random Forest Ensemble for Continuous Data
+      - max_samples = 0.55
+      - n_estimators = 1600
+      - max_depth = 7
+      - min_samples_split = 4
+      - max_features = 0.6
+  3. Gradient Boosting Regressor
+      - n_estimators = 1100
+      - booster = "gblinear"
+      - max_depth = None
+      - learning_rate = None
+      - min_child_weight = None
+  4. Logistic Regression Model
+      - c = 1.5
+      - max_iter = 2000
+      - tol = None
+  5. Random Forest Ensemble for Categorical Data
+      - max_samples = 0.55
+      - n_estimators = 1600
+      - max_depth = 7
+      - min_samples_split = 4 
+      - max_features = 0.6
+      - class_weight = "balanced"
+  6. Gradient Boosting Classifier
+      - n_estimators = 1700
+      - max_depth = 7
+      - learning_rate = 0.125
+      - booster = "gbtree"
+      - min_child_weight = 12
+
+{'linearModelPreds': 0.009930547718723943, 'regressionEnsemblePreds': 0.009868321272075556, 'GBRegPreds': 0.009930084170251697} {'logisticPreds': 0.6954458097682628, 'classificationEnsemblePreds': 0.6940520271135308, 'GBClassPreds': 1.0238544648409225}
+CPU times: total: 2min 5s
+Wall time: 31.6 s
 
 
-
-
-
-
-
-
-
-
-
+Conclusion: Editing of hyperparameters make little improvement to cost functions. Problem is in feature engineering! Can try to integrate all algorithms to two ensembles and see how scores improve.
