@@ -171,6 +171,15 @@ for index, row in predsDF.iterrows():
 
 contLoss= calculateRMSE(predsDictCont, testSet["%ChangeTomorrow"])
 
+blackWhitePreds = []
+for i in range(len(predsDF)):
+    if predsDF.iloc[i, 8] > 0.5:
+        blackWhitePreds.append(1)
+    else:
+        blackWhitePreds.append(0)
+
 print(contLoss, entropyDict)
 print("Consolidated RMSE:  ", mse(testSet["%ChangeTomorrow"], predsDF["Consol%Chg"].to_list())**0.5)
 print("Consolidated Cross-Entropy Loss:   ", log_loss(testSet["UpOrDownTMR"], predsDF["ConsolProbaUp"]))
+
+print(accuracy_score(testSet["UporDownTMR"], blackWhitePreds))
